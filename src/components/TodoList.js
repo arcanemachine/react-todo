@@ -6,7 +6,7 @@ export default class TodoList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      todos: [{ id: 0, description: 'hello' }],
+      todos: [],
       currentUpdatePanel: undefined
     };
     this.setCurrentUpdatePanel = this.setCurrentUpdatePanel.bind(this);
