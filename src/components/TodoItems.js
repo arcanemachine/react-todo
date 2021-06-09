@@ -4,13 +4,18 @@ import TodoItem from './TodoItem.js';
 export default class TodoItems extends React.Component {
   render() {
     const todos = this.props.todos.length ? (
-      this.props.todos.map(
-        (todo) => <TodoItem key={todo.id}
-                            todo={todo}
-                            className="mt-4"
-                            emitTodoUpdate={this.props.emitTodoUpdate}
-                            emitTodoDelete={this.props.emitTodoDelete} />
-      )
+      this.props.todos.map((todo) => {
+        return (
+          <TodoItem key={todo.id}
+                    todo={todo}
+                    className="mt-4"
+                    currentUpdatePanel={this.props.currentUpdatePanel}
+                    emitSetCurrentUpdatePanel=
+                      {this.props.emitSetCurrentUpdatePanel}
+                    emitTodoUpdate={this.props.emitTodoUpdate}
+                    emitTodoDelete={this.props.emitTodoDelete} />
+        );
+      })
     ) : (
       <li className="my-4">
         Your todo list is empty.
@@ -22,7 +27,7 @@ export default class TodoItems extends React.Component {
           {todos}
         </ul>
         <div className="my-4">
-          You can modify/remove an item by clicking on it.
+          You can modify or remove an item by clicking on it.
         </div>
       </div>
     );

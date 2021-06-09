@@ -6,15 +6,21 @@ export default class TodoList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      todos: [{ id: 0, description: 'hello' }]
+      todos: [{ id: 0, description: 'hello' }],
+      currentUpdatePanel: undefined
     };
+    this.setCurrentUpdatePanel = this.setCurrentUpdatePanel.bind(this);
     this.todoCreate = this.todoCreate.bind(this);
     this.todoUpdate = this.todoUpdate.bind(this);
     this.todoDelete = this.todoDelete.bind(this);
   }
 
+  setCurrentUpdatePanel(id) {
+    console.log(`TodoList: received emitSetCurrentUpdatePanel() ${id}`);
+    this.setState({ currentUpdatePanel: id });
+  }
+
   todoCreate(todoDescription) {
-    console.log(todoDescription)
     this.setState({
       todos: [...this.state.todos, {
         id: this.state.todos.length,
@@ -23,14 +29,14 @@ export default class TodoList extends React.Component {
     })
   }
 
-  todoDelete(id) {
-    this.setState({ todos: this.state.todos.splice(id, 1) });
+  todoDelete(todo) {
+    this.setState({ todos: this.state.todos.splice(todo.id, 1) });
     this.todoRegenerateIds();
   }
 
-  todoUpdate(id, updatedDescription) {
+  todoUpdate(todo, updatedDescription) {
     this.setState(prevState => {
-      prevState.todos[id].description = updatedDescription;
+      prevState.todos[todo.id].description = updatedDescription;
       return prevState;
     })
   }
@@ -48,6 +54,8 @@ export default class TodoList extends React.Component {
       <div>
         <TodoCreateForm emitTodoCreate={this.todoCreate} />
         <TodoItems todos={this.state.todos}
+                   currentUpdatePanel={this.state.currentUpdatePanel}
+                   emitSetCurrentUpdatePanel={this.setCurrentUpdatePanel}
                    emitTodoUpdate={this.todoUpdate}
                    emitTodoDelete={this.todoDelete} />
       </div>

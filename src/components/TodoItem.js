@@ -5,7 +5,6 @@ export default class TodoItem extends React.Component {
     super(props);
     this.state = {
       updatedDescription: '',
-      isUpdatePanelActive: false
     }
 
     // events
@@ -20,9 +19,9 @@ export default class TodoItem extends React.Component {
     this.inputUpdatedDescription = React.createRef();
   }
 
-  emitTodoDelete(e) {
+  emitTodoDelete(todo) {
     this.todoUpdatePanelDisable();
-    this.props.emitTodoDelete(e);
+    this.props.emitTodoDelete(todo);
   }
 
   handleChangeUpdatedDescription(e) {
@@ -31,27 +30,26 @@ export default class TodoItem extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.setState({ isUpdatePanelActive: false });
+    this.todoUpdatePanelDisable();
     this.props.emitTodoUpdate(
-      this.props.todo.id,
+      this.props.todo,
       this.state.updatedDescription
     );
   }
 
   todoUpdatePanelEnable() {
-    this.setState({
-      isUpdatePanelActive: true,
-      updatedDescription: this.props.todo.description
-    })
+    console.log('TodoItem: emitted emitSetCurrentUpdatePanel()');
+    this.props.emitSetCurrentUpdatePanel(this.props.todo.id);
+    this.setState({ updatedDescription: this.props.todo.description });
   }
 
   todoUpdatePanelDisable() {
-    this.setState({ isUpdatePanelActive: false })
+    this.props.emitSetCurrentUpdatePanel(undefined);
   }
 
   render() {
     return (
-      this.state.isUpdatePanelActive ? (
+      this.props.currentUpdatePanel === this.props.todo.id ? (
         <form className="my-4"
               onSubmit={this.handleSubmit}>
           <input type="button"
