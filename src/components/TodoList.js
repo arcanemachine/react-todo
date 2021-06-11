@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TodoCreateForm from './TodoCreateForm.js';
 import TodoItems from './TodoItems.js';
 
@@ -28,6 +28,12 @@ export default function TodoList() {
   function updateTodoIds(state) {
     return state.forEach((todo, i) => state[i].id = i);
   }
+
+  useEffect(() => {
+    const title = "React Todos";
+    document.title = 
+      `${title} - ${todos.length} item${todos.length === 1 ? '' : 's'}`;
+  }, [todos]);
 
   return (
     <React.Fragment>
