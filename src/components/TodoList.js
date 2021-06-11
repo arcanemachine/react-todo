@@ -7,10 +7,12 @@ export default function TodoList() {
   const [currentUpdatePanel, setCurrentUpdatePanel] = useState(undefined);
 
   function todoCreate(description) {
-    setTodos(state => [...state, {
-        id: state.length,
-        description: description
-    }]);
+    if (description) {
+      setTodos(state => [...state, {
+          id: state.length,
+          description: description
+      }]);
+    }
   }
 
   function todoUpdate(id, description) {
