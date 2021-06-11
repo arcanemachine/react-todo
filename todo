@@ -1,5 +1,7 @@
 TODO
 
+- finish tests using function-based components
+
 - empty description
   - create: do not create new item
   - update: delete current item
