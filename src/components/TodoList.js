@@ -17,8 +17,12 @@ export default function TodoList() {
 
   function todoUpdate(id, description) {
     let state = todos;
-    state[id].description = description;
-    setTodos(state)
+    if (!description) {
+      todoDelete(id); // delete the todo if description is empty
+    } else {
+      state[id].description = description;
+      setTodos(state)
+    }
   }
 
   function todoDelete(id) {

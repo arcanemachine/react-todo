@@ -3,8 +3,6 @@ TODO
 - add context hook to avoid repetitive child-parent communication
 - finish tests using function-based components
 
-- empty description
-  - update: delete current item
 - only allow one active update panel at a time
 - mark items complete
 - save data in localStorage
