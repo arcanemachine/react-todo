@@ -1,5 +1,7 @@
 TODO
 
+- add context hook to avoid repetitive child-parent communication
+- add useEffect hook - display todo count?
 - finish tests using function-based components
 
 - empty description
