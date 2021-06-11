@@ -1,64 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TodoCreateForm from './TodoCreateForm.js';
 import TodoItems from './TodoItems.js';
 
-export default class TodoList extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      todos: [],
-      currentUpdatePanel: undefined
-    };
-    this.setCurrentUpdatePanel = this.setCurrentUpdatePanel.bind(this);
-    this.todoCreate = this.todoCreate.bind(this);
-    this.todoUpdate = this.todoUpdate.bind(this);
-    this.todoDelete = this.todoDelete.bind(this);
+export default function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [currentUpdatePanel, setCurrentUpdatePanel] = useState(undefined);
+
+  function todoCreate(description) {
+    setTodos(state => [...state, {
+        id: state.length,
+        description: description
+    }]);
   }
 
-  setCurrentUpdatePanel(id) {
-    console.log(`TodoList: received emitSetCurrentUpdatePanel() ${id}`);
-    this.setState({ currentUpdatePanel: id });
+  function todoUpdate(id, description) {
+    let state = todos;
+    state[id].description = description;
+    setTodos(state)
   }
 
-  todoCreate(todoDescription) {
-    this.setState({
-      todos: [...this.state.todos, {
-        id: this.state.todos.length,
-        description: todoDescription
-      }]
-    })
+  function todoDelete(id) {
+    let state = [...todos].filter(todo => todo.id !== id); // delete the todo
+    updateTodoIds(state);
+    setTodos(state);
   }
 
-  todoDelete(todo) {
-    this.setState({ todos: this.state.todos.splice(todo.id, 1) });
-    this.todoRegenerateIds();
+  function updateTodoIds(state) {
+    return state.forEach((todo, i) => state[i].id = i);
   }
 
-  todoUpdate(todo, updatedDescription) {
-    this.setState(prevState => {
-      prevState.todos[todo.id].description = updatedDescription;
-      return prevState;
-    })
-  }
-
-  todoRegenerateIds() {
-    let todos = this.state.todos;
-    for (let i = 0; i < todos.length; i++) {
-      todos[i].id = i;
-    }
-    this.setState({ todos });
-  }
-
-  render() {
-    return (
-      <div>
-        <TodoCreateForm emitTodoCreate={this.todoCreate} />
-        <TodoItems todos={this.state.todos}
-                   currentUpdatePanel={this.state.currentUpdatePanel}
-                   emitSetCurrentUpdatePanel={this.setCurrentUpdatePanel}
-                   emitTodoUpdate={this.todoUpdate}
-                   emitTodoDelete={this.todoDelete} />
-      </div>
-    );
-  }
+  return (
+    <React.Fragment>
+      <TodoCreateForm
+        emitTodoCreate={(description) => todoCreate(description)} />
+      <TodoItems
+        todos={todos}
+        currentUpdatePanel={currentUpdatePanel}
+        emitSetCurrentUpdatePanel={(id) => setCurrentUpdatePanel(id)}
+        emitTodoUpdate={(id, description) => todoUpdate(id, description)}
+        emitTodoDelete={(id) => todoDelete(id)} />
+    </React.Fragment>
+  );
 }
