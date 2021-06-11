@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`My first snapshot test Page renders correctly 1`] = `
+Array [
+  <form
+    className="mt-4 mx-auto is-flex is-justify-content-center"
+    onSubmit={[Function]}
+  >
+    <input
+      className="input is-inline is-medium btn-group-left-side"
+      onChange={[Function]}
+      placeholder="Enter new todo item..."
+      type="text"
+      value=""
+    />
+    <input
+      className="button is-success is-medium btn-group-right-side"
+      type="submit"
+      value="Create"
+    />
+  </form>,
+  <div
+    className="has-text-centered"
+  >
+    <ul
+      className="my-4 py-2 box"
+    >
+      <li
+        className="my-4"
+      >
+        Your todo list is empty.
+      </li>
+    </ul>
+    <div
+      className="my-4"
+    >
+      You can modify or remove an item by clicking on it.
+    </div>
+  </div>,
+]
+`;
