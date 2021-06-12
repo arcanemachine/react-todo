@@ -1,7 +1,8 @@
 TODO
 
-- add context hook to avoid repetitive child-parent communication
 - finish tests using function-based components
+
+- add context hook to avoid repetitive child-parent communication?
 
 - only allow one active update panel at a time
 - mark items complete
