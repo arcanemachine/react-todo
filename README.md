@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# react-todo
 
 A live demo can be found [here](https://another-react-todo-list.surge.sh/).
 
